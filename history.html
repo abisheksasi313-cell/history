@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mac History Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      padding: 20px;
+    }
+    .chatbox {
+      max-width: 600px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .messages {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .user, .bot {
+      margin: 5px 0;
+    }
+    .user {
+      text-align: right;
+      color: blue;
+    }
+    .bot {
+      text-align: left;
+      color: green;
+    }
+    input[type="text"] {
+      width: 80%;
+      padding: 10px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chatbox">
+    <h2>💬 Mac History Chatbot</h2>
+    <div class="messages" id="chat"></div>
+    <input type="text" id="userInput" placeholder="Ask about Mac history..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+
+  <script>
+    const chat = document.getElementById('chat');
+
+    const qa = {
+      "when was the first mac released": "The first Macintosh was released on January 24, 1984.",
+      "who founded apple": "Apple was founded by Steve Jobs, Steve Wozniak, and Ronald Wayne in 1976.",
+      "what was the first apple computer": "The first Apple computer was the Apple I, launched in 1976.",
+      "when did steve jobs return to apple": "Steve Jobs returned to Apple in 1997 after Apple acquired his company NeXT.",
+      "what is macos": "macOS is Apple’s operating system for Mac computers. It was first released in 2001 as Mac OS X.",
+      "exit": "Goodbye! 👋"
+    };
+
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const text = input.value.trim().toLowerCase();
+      if (!text) return;
+
+      appendMessage('user', text);
+
+      const response = qa[text] || "Sorry, I don't know the answer to that Mac history question.";
+      appendMessage('bot', response);
+
+      if (text === "exit") {
+        document.getElementById("userInput").disabled = true;
+      }
+
+      input.value = '';
+    }
+
+    function appendMessage(sender, message) {
+      const msg = document.createElement('div');
+      msg.className = sender;
+      msg.textContent = message;
+      chat.appendChild(msg);
+      chat.scrollTop = chat.scrollHeight;
+    }
+  </script>
+</body>
+</html>
